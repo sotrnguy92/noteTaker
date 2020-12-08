@@ -18,4 +18,12 @@ router.post("/notes", (req, res) => {
     res.send(dbRead);
 });
 
+router.delete("/notes/:id", (req, res) => {
+    const dbRead = JSON.parse(fs.readFileSync('db/db.json'));
+    const id = req.params.id;
+    const result = dbRead.filter(note => note.id !== parseInt(id));
+    fs.writeFileSync('db/db.json', JSON.stringify(result));
+    res.send(result);
+})
+
 module.exports = router;
